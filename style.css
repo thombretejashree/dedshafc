@@ -13,7 +13,7 @@
 /* (All your other existing styles like body, .container, .btn, etc. go here) */
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 body { background-color: var(--dark); color: var(--light); line-height: 1.6; transition: padding-left 0.3s ease-in-out; }
-.container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+.container { max-width: 600px; margin: 0 auto; padding: 0 20px; }
 /* ...and so on for all your styles... */
 .page-title h1 { font-size: 36px; margin-bottom: 10px; color: var(--accent); }
 .page-title p { color: rgba(255, 255, 255, 0.7); }
