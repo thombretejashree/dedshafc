@@ -1,0 +1,63 @@
+<main class="container">
+    <div class="page-title">
+        <h1><i class="fas fa-fingerprint"></i> Generate Secure Hashes</h1>
+        <p>Create unique digital fingerprints for your data</p>
+    </div>
+    
+    <div class="input-area">
+        <h3><i class="fas fa-pencil-alt"></i> Enter Text to Hash</h3>
+        <textarea class="text-input" placeholder="Type or paste the text you want to hash..."></textarea>
+        
+        <div class="upload-area">
+            <i class="fas fa-file-upload"></i>
+            <h3>Or Upload a File</h3>
+            <p>Drag & drop files here or click to browse</p>
+            <input type="file" id="file-upload" style="display: none;">
+            <button class="btn" onclick="document.getElementById('file-upload').click()">
+                <i class="fas fa-folder-open"></i> Select File
+            </button>
+        </div>
+    </div>
+    
+    <div class="options">
+        <h3><i class="fas fa-cog"></i> Hash Algorithm</h3>
+        <div class="radio-group">
+            <div class="radio-option">
+                <input type="radio" id="sha256" name="algorithm" checked>
+                <label for="sha256">SHA-256</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="sha512" name="algorithm">
+                <label for="sha512">SHA-512</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="md5" name="algorithm">
+                <label for="md5">MD5</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="sha1" name="algorithm">
+                <label for="sha1">SHA-1</label>
+            </div>
+        </div>
+        
+        <button class="btn" style="width: 100%;" onclick="document.querySelector('.hash-result').style.display = 'block'">
+            <i class="fas fa-hashtag"></i> Generate Hash
+        </button>
+    </div>
+    
+    <div class="hash-result">
+        <h3><i class="fas fa-hashtag"></i> Generated Hash</h3>
+        <div class="hash-output">
+            e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+        </div>
+        <button class="btn" style="margin-top: 15px; width: 100%;">
+            <i class="fas fa-copy"></i> Copy to Clipboard
+        </button>
+    </div>
+    
+    <div class="action-btn">
+        <a href="steganography.html" class="btn">
+            <i class="fas fa-hashtag"></i> Proceed to Steganography
+        </a>
+    </div>
+</main>

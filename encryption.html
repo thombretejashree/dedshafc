@@ -1,0 +1,93 @@
+<main class="container">
+    <div class="page-title">
+        <h1><i class="fas fa-lock"></i> Encrypt Your Data</h1>
+        <p>Secure your data with advanced encryption algorithms</p>
+    </div>
+
+    <div class="input-area">
+        <h3><i class="fas fa-pencil-alt"></i> Enter Text to Encrypt</h3>
+        <textarea id="text-to-encrypt" class="text-input" placeholder="Paste your text data here..."></textarea>
+
+        <div class="upload-area">
+            <i class="fas fa-file-upload"></i>
+            <h3>Or Upload a File</h3>
+            <p>Drag & drop files here or click to browse</p>
+            <input type="file" id="file-upload" style="display: none;">
+            <button class="btn" onclick="document.getElementById('file-upload').click()">
+                <i class="fas fa-folder-open"></i> Select File
+            </button>
+        </div>
+    </div>
+
+    <div class="options">
+        <h3><i class="fas fa-key"></i> Encryption Key</h3>
+        <input type="text" id="encryption-key" class="key-input" placeholder="Enter a strong password to encrypt your data">
+
+        <h3><i class="fas fa-cog"></i> Encryption Method</h3>
+        <div class="radio-group">
+            <div class="radio-option">
+                <input type="radio" id="aes" name="encryption" checked>
+                <label for="aes">AES-256</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="rsa" name="encryption" disabled>
+                <label for="rsa" style="cursor: not-allowed; opacity: 0.5;">RSA (coming soon)</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-btn">
+        <button id="encrypt-btn" class="btn">
+            <i class="fas fa-lock"></i> Encrypt & Download ZIP
+        </button>
+    </div>
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script>
+    const textInput = document.getElementById('text-to-encrypt');
+    const fileInput = document.getElementById('file-upload');
+    const keyInput = document.getElementById('encryption-key');
+    const encryptBtn = document.getElementById('encrypt-btn');
+
+    fileInput.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            textInput.value = e.target.result;
+        };
+        reader.readAsText(file);
+    });
+
+    encryptBtn.addEventListener('click', () => {
+        const plainText = textInput.value;
+        const password = keyInput.value;
+        if (!plainText) {
+            alert('Please enter some text or upload a file to encrypt.');
+            return;
+        }
+        if (!password) {
+            alert('Please enter an encryption key.');
+            return;
+        }
+        try {
+            const encrypted = CryptoJS.AES.encrypt(plainText, password).toString();
+            const zip = new JSZip();
+            zip.file("encrypted-data.txt", encrypted);
+            zip.file("readme.txt", "This file contains data encrypted with AES-256.\nUse the same key/password to decrypt it on the website.");
+            zip.generateAsync({ type: "blob" }).then(function(content) {
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(content);
+                link.download = "encrypted_files.zip";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        } catch (error) {
+            console.error("An error occurred during encryption:", error);
+            alert("An error occurred during encryption.");
+        }
+    });
+</script>

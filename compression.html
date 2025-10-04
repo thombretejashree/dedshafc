@@ -1,0 +1,44 @@
+<main class="container">
+    <div class="page-title">
+        <h1><i class="fas fa-compress-alt"></i> Compress Your Data</h1>
+        <p>Reduce file sizes while maintaining data integrity</p>
+    </div>
+    
+    <div class="upload-area">
+        <i class="fas fa-cloud-upload-alt"></i>
+        <h3>Upload Files to Compress</h3>
+        <p>Drag & drop files here or click to browse</p>
+        <input type="file" id="file-upload" style="display: none;">
+        <button class="btn" onclick="document.getElementById('file-upload').click()">
+            <i class="fas fa-folder-open"></i> Select Files
+        </button>
+    </div>
+    
+    <div class="options">
+        <h3><i class="fas fa-cog"></i> Compression Options</h3>
+        <div class="radio-group">
+            <div class="radio-option">
+                <input type="radio" id="zip" name="compression" checked>
+                <label for="zip">ZIP</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="gzip" name="compression">
+                <label for="gzip">GZIP</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="bzip2" name="compression">
+                <label for="bzip2">BZIP2</label>
+            </div>
+            <div class="radio-option">
+                <input type="radio" id="7z" name="compression">
+                <label for="7z">7-Zip</label>
+            </div>
+        </div>
+    </div>
+    
+    <div class="action-btn">
+        <a href="#" class="btn">
+            <i class="fas fa-compress-alt"></i> Compress & Download
+        </a>
+    </div>
+</main>

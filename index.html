@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Data Processing System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <a href="#" class="logo-link">
+                <svg class="logo-svg" width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L3 7V17L12 22L21 17V7L12 2Z" stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M12 2V12M12 12L3 7M12 12L21 7M12 12L12 22M12 22L3 17M12 22L21 17" stroke="var(--light)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="12" cy="12" r="1.5" fill="var(--accent)"/>
+                </svg>
+                <span class="logo-text">SecureData</span>
+            </a>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="home.html" class="nav-link active"><i class="fas fa-home"></i> <span class="link-text">Home</span></a>
+            <a href="compression.html" class="nav-link"><i class="fas fa-compress-alt"></i> <span class="link-text">Compression</span></a>
+            <a href="encryption.html" class="nav-link"><i class="fas fa-lock"></i> <span class="link-text">Encryption</span></a>
+            <a href="decryption.html" class="nav-link"><i class="fas fa-unlock"></i> <span class="link-text">Decryption</span></a>
+            <a href="hashing.html" class="nav-link"><i class="fas fa-fingerprint"></i> <span class="link-text">Hashing</span></a>
+            <a href="steganography.html" class="nav-link"><i class="fas fa-eye-slash"></i> <span class="link-text">Steganography</span></a>
+        </nav>
+        <div class="sidebar-footer">
+            <button id="sidebar-toggle" class="toggle-btn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+    </aside>
+
+    <div class="main-wrapper">
+        <header class="main-header">
+            <div class="header-content">
+                <h1 id="page-title">Home</h1>
+            </div>
+        </header>
+
+        <main id="main-content" class="container">
+            </main>
+
+        <footer>
+            <div class="copyright">
+                &copy; 2023 Secure Data Processing System. All rights reserved.
+            </div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
