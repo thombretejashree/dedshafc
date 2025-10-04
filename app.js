@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sidebarToggle = document.getElementById('sidebar-toggle');
     const mainContent = document.getElementById('main-content');
     const pageTitle = document.getElementById('page-title');
-    const navLinks = document.querySelectorAll('.sidebar-nav .nav-link');
+    const sidebarNav = document.querySelector('.sidebar-nav');
     const logoLink = document.querySelector('.logo-link');
 
     // --- Sidebar Collapse/Expand Logic ---
@@ -14,74 +14,93 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Dynamic Page Loading (SPA Router) ---
     const loadContent = async (url) => {
         try {
-            // Add a loading indicator (optional)
             mainContent.innerHTML = '<p style="text-align:center;">Loading...</p>';
 
             const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            
             const pageHTML = await response.text();
-
-            // Use DOMParser to avoid issues with scripts and styles
             const parser = new DOMParser();
             const doc = parser.parseFromString(pageHTML, 'text/html');
-            
-            // Get only the main content from the fetched page
             const newContent = doc.querySelector('main');
+            
             if (newContent) {
                 mainContent.innerHTML = newContent.innerHTML;
-                
-                // Find and execute any scripts within the loaded content
-                const scripts = newContent.querySelectorAll('script');
+                const scripts = doc.querySelectorAll('script');
                 scripts.forEach(script => {
                     const newScript = document.createElement('script');
                     if (script.src) {
                         newScript.src = script.src;
                     } else {
-                        newScript.innerHTML = script.innerHTML;
+                        newScript.textContent = script.textContent;
                     }
                     document.body.appendChild(newScript).parentNode.removeChild(newScript);
                 });
-
             } else {
                 mainContent.innerHTML = '<p style="text-align:center;color:red;">Error: Content not found.</p>';
             }
-
         } catch (error) {
             console.error('Failed to load page:', error);
-            mainContent.innerHTML = `<p style="text-align:center;color:red;">Failed to load content. Please check the console.</p>`;
+            mainContent.innerHTML = `<p style="text-align:center;color:red;">Failed to load content.</p>`;
         }
     };
     
+    // --- Universal Navigation Click Handler ---
     const handleNavClick = (event, linkElement) => {
-        event.preventDefault(); // Prevent default page navigation
+        event.preventDefault();
         const url = linkElement.getAttribute('href');
-        
-        // Update active link style
-        navLinks.forEach(link => link.classList.remove('active'));
-        linkElement.classList.add('active');
+        const title = linkElement.dataset.title;
 
-        // Update page title
-        const linkText = linkElement.querySelector('.link-text').textContent;
-        pageTitle.textContent = linkText;
+        // Update page title in the header
+        if (title) {
+            pageTitle.textContent = title;
+        }
+
+        // Update active link style in the sidebar
+        document.querySelectorAll('.sidebar-nav .nav-link').forEach(link => {
+            if (link.getAttribute('href') === url) {
+                link.classList.add('active');
+            } else {
+                link.classList.remove('active');
+            }
+        });
 
         // Load the new content
         loadContent(url);
         
-        // Update URL in browser for history (optional but good practice)
-        history.pushState(null, '', '?' + url.split('.')[0]);
+        // Update browser URL
+        history.pushState({ path: url }, '', '?' + url.split('.')[0]);
     };
     
-    // Attach event listeners to all navigation links
-    navLinks.forEach(link => {
-        link.addEventListener('click', (event) => handleNavClick(event, link));
+    // Listen for clicks on sidebar links
+    sidebarNav.addEventListener('click', (event) => {
+        const linkElement = event.target.closest('a.nav-link');
+        if (linkElement) {
+            handleNavClick(event, linkElement);
+        }
     });
 
-    logoLink.addEventListener('click', (event) => handleNavClick(event, navLinks[0])); // Logo goes to home
+    // Listen for clicks on links inside the main content (like homepage cards)
+    mainContent.addEventListener('click', (event) => {
+        const linkElement = event.target.closest('a.nav-link');
+        if (linkElement) {
+            handleNavClick(event, linkElement);
+        }
+    });
 
-    // Load initial content based on URL or default to home
+    logoLink.addEventListener('click', (event) => {
+        // Find the home link in the sidebar and trigger a click on it
+        const homeLink = document.querySelector('.sidebar-nav a[href="home.html"]');
+        if (homeLink) {
+            handleNavClick(event, homeLink);
+        }
+    });
+
+    // Load initial content on page load
     const initialPage = window.location.search.substring(1) + '.html' || 'home.html';
-    const initialLink = document.querySelector(`.nav-link[href="${initialPage}"]`) || navLinks[0];
-    initialLink.click();
+    const initialLink = document.querySelector(`.nav-link[href="${initialPage}"]`) || document.querySelector('.nav-link[href="home.html"]');
+    if (initialLink) {
+        // Use a synthetic event to avoid issues
+        handleNavClick(new MouseEvent('click'), initialLink);
+    }
 });
