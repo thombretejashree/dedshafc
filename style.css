@@ -51,11 +51,11 @@ body { background-color: var(--dark); color: var(--light); line-height: 1.6; tra
     border: 1px solid rgba(255, 255, 255, 0.1);
     color: var(--light);
     text-decoration: none;
-    /* New styles for center alignment */
     display: flex;
     flex-direction: column;
-    align-items: center; /* Horizontally center all items */
-    text-align: center;  /* Center all text */
+    align-items: center;
+    text-align: center;
+    min-height: 260px; /* Ensures the card is tall enough */
 }
 
 .card:hover {
