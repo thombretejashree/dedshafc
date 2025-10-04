@@ -79,6 +79,8 @@ body { background-color: var(--dark); color: var(--light); line-height: 1.6; tra
     color: rgba(255, 255, 255, 0.7);
     font-size: 16px;
     flex-grow: 1; 
+    line-height: 1.5; /* Added for better spacing between lines */
+    opacity: 0.8;     /* Added to make text slightly softer */
 }
 /* =========================================== */
 /* ===== ADD THE NEW CSS STYLES BELOW ===== */
